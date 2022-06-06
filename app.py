@@ -23,7 +23,7 @@ import wandb
 from datetime import datetime
 
 from urllib.request import urlopen
-]import requests
+import requests
 from fastapi import FastAPI
 import asyncio
 import uvicorn
