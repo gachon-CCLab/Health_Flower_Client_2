@@ -167,8 +167,9 @@ async def flclientstart(background_tasks: BackgroundTasks, Server_IP: str):
     global status
     global model
     model = build_model()
+    print('bulid model')
 
-    print('start')
+    print('FL start')
     status.FL_client_start = True
     status.FL_server_IP = Server_IP
     background_tasks.add_task(run_client)
@@ -188,7 +189,7 @@ async def run_client():
     await flower_client_start()
 
 async def flower_client_start():
-    print('learning')
+    print('FL learning')
     global status
     global model
 
@@ -204,6 +205,7 @@ async def flower_client_start():
         request = partial(fl.client.start_numpy_client, server_address=status.FL_server_IP, client=client)
         await loop.run_in_executor(None, request)
         
+        print('fl learning finished')
         await model_save()
         del client
     except Exception as e:
