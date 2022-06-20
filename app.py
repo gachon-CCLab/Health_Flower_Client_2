@@ -188,6 +188,8 @@ async def run_client():
         status.FL_client_fail = False
     await flower_client_start()
 
+    return status
+
 async def flower_client_start():
     print('FL learning')
     global status
@@ -215,6 +217,7 @@ async def flower_client_start():
         await notify_fail()
         status.FL_client_fail = False
         # raise e
+    return status
 
 async def model_save():
     print('model_save')
@@ -239,6 +242,8 @@ async def model_save():
         await notify_fail()
         status.FL_client_fail = False
 
+    return status
+
 # client manager에서 train finish 정보 확인
 async def notify_fin():
     global status
@@ -251,6 +256,8 @@ async def notify_fin():
         print('trainFin')
     else:
         print(r.content)
+        
+    return status
 
 # client manager에서 train fail 정보 확인
 async def notify_fail():
@@ -264,6 +271,8 @@ async def notify_fail():
         print('trainFin')
     else:
         print(r.content)
+
+    return status
 
 def load_partition():
     # Load the dataset partitions
