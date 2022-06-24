@@ -1,6 +1,6 @@
 # https://github.com/adap/flower/tree/main/examples/advanced_tensorflow 참조
 
-import os
+import os, time
 
 import tensorflow as tf
 
@@ -178,7 +178,7 @@ async def flclientstart(background_tasks: BackgroundTasks, Server_IP: str):
 async def run_client():
     global model
     try:
-        # time.sleep(10)
+        time.sleep(10)
         # model.load_weights('/model/model.h5')
         pass
     except Exception as e:
