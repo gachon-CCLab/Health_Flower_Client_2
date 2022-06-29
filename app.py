@@ -237,11 +237,11 @@ async def flower_client_start():
         await model_save()
         logging.info('model_save')
         del client, request
-        logging.info('fl client, request delete')
-        loop.stop()
-        logging.info('fl client start loop 중지')
-        loop.close()
-        logging.info('fl client start loop 종료')
+        # logging.info('fl client, request delete')
+        # loop.stop()
+        # logging.info('fl client start loop 중지')
+        # loop.close()
+        # logging.info('fl client start loop 종료')
     except Exception as e:
         await notify_fail()
         logging.info('[E][PC0002] learning', e)
@@ -286,10 +286,6 @@ async def notify_fin():
     print('try notify_fin')
     if r.status_code == 200:
         print('trainFin')
-        loop.stop()
-        logging.info('fl client notify_fin loop 중지')
-        loop.close()
-        logging.info('fl client notify_fin loop 종료')
     else:
         print('notify_fin error: ', r.content)
     return status
@@ -310,10 +306,6 @@ async def notify_fail():
     logging.info('notify_fail complete')
     if r.status_code == 200:
         logging.info('trainFin')
-        loop.stop()
-        logging.info('fl client notify_fail loop 중지')
-        loop.close()
-        logging.info('fl client notify_fail loop 종료')
     else:
         logging.info('notify_fail error: ', r.content)
     
