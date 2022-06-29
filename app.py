@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 global client_num
-client_num = 2 # client 번호
+client_num = 3 # client 번호
 
 # FL client 상태 확인
 app = FastAPI()
@@ -189,7 +189,8 @@ async def run_client():
         if f'model_V{latest_gl_model_v}.h5' in model_list:
             logging.info('latest model load_weights')
             model.load_weights(f'/model/model_V{latest_gl_model_v}.h5')
-            return model
+            # await flower_client_start()
+            
         else:
             logging.info('NO latest model load_weights')
             pass
