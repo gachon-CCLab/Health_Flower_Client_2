@@ -174,10 +174,12 @@ async def flclientstart(background_tasks: BackgroundTasks, Server_IP: str):
     logging.info('FL start')
     status.FL_client_start = True
     status.FL_server_IP = Server_IP
-    background_tasks.add_task(run_client)
+    # background_tasks.add_task(run_client)
+    background_tasks.add_task(flower_client_start)
+
     return status
 
-async def run_client():
+# async def run_client():
     global model
     try:
         logging.info('FL Run')
@@ -217,11 +219,11 @@ async def flower_client_start():
         # assert type(client).get_properties == fl.client.NumPyClient.get_properties
         logging.info(f'fl-server-ip: {status.FL_server_IP}')
         # fl.client.start_numpy_client(server_address=status.FL_server_IP, client=client)
-        await asyncio.sleep(20) # FL-Server 켜질때 까지 잠시 대기
+        # await asyncio.sleep(20) # FL-Server 켜질때 까지 잠시 대기
         request = partial(fl.client.start_numpy_client, server_address=status.FL_server_IP, client=client)
         await loop.run_in_executor(None, request)
         
-        await asyncio.sleep(30) # excute 수행 시간동안 잠시 대기
+        # await asyncio.sleep(30) # excute 수행 시간동안 잠시 대기
 
         # inform_Payload = {
         #     'FL_learning_complete': True
@@ -243,13 +245,11 @@ async def flower_client_start():
         # loop.close()
         # logging.info('fl client start loop 종료')
     except Exception as e:
-        await notify_fail()
         logging.info('[E][PC0002] learning', e)
-        # status.FL_client_fail = True
-        # # await notify_fail()
-        
-        # status.FL_client_fail = False
-        # raise e
+        status.FL_client_fail = True
+        await notify_fail()        
+        status.FL_client_fail = False
+        raise e
     return status
 
 async def model_save():
